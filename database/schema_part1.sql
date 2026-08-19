@@ -1,3 +1,4 @@
+-- Active: 1787130112764@@127.0.0.1@5432@mca_db
 -- ============================================================
 -- MCA - Module Pré-Comptabilité — Schéma Complet (Partie 1)
 -- Auth, Organisation, Documents, OCR, Doublons
