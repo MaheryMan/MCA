@@ -1,0 +1,336 @@
+{
+	"info": {
+		"_postman_id": "mca-auth-collection-v1",
+		"name": "MCA — Module Pré-Comptabilité (Auth & Comptes)",
+		"description": "Collection complète des endpoints d'authentification JWT et de gestion de compte pour l'API MCA.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Inscription (Register)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    var jsonData = pm.response.json();",
+							"    if (jsonData.tokens) {",
+							"        pm.environment.set(\"accessToken\", jsonData.tokens.access);",
+							"        pm.environment.set(\"refreshToken\", jsonData.tokens.refresh);",
+							"        console.log(\"Tokens JWT sauvegardés automatiquement !\");",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"comptable@mca.mg\",\n    \"first_name\": \"Hery\",\n    \"last_name\": \"Rajaonarison\",\n    \"password\": \"SecuredPassword2026!\",\n    \"password_confirm\": \"SecuredPassword2026!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/accounts/register/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"register",
+						""
+					]
+				},
+				"description": "Créer un nouveau compte utilisateur et récupère automatiquement les tokens d'accès."
+			},
+			"response": []
+		},
+		{
+			"name": "2. Connexion (Login)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    var jsonData = pm.response.json();",
+							"    if (jsonData.access) {",
+							"        pm.environment.set(\"accessToken\", jsonData.access);",
+							"    }",
+							"    if (jsonData.refresh) {",
+							"        pm.environment.set(\"refreshToken\", jsonData.refresh);",
+							"    }",
+							"    console.log(\"Tokens JWT mis à jour !\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"comptable@mca.mg\",\n    \"password\": \"SecuredPassword2026!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/accounts/login/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"login",
+						""
+					]
+				},
+				"description": "Connexion par email et mot de passe. Renvoie les tokens JWT et le profil avec entreprises affiliées."
+			},
+			"response": []
+		},
+		{
+			"name": "3. Mon Profil (Get Me)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/accounts/me/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"me",
+						""
+					]
+				},
+				"description": "Récupère les informations de l'utilisateur connecté et la liste de ses entreprises avec rôles."
+			},
+			"response": []
+		},
+		{
+			"name": "4. Modifier Profil (Update Me)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"Hery Nomena\",\n    \"last_name\": \"Rajaonarison\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/accounts/me/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"me",
+						""
+					]
+				},
+				"description": "Met à jour le prénom ou le nom de l'utilisateur connecté."
+			},
+			"response": []
+		},
+		{
+			"name": "5. Rafraîchir Token (Refresh)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 200) {",
+							"    var jsonData = pm.response.json();",
+							"    if (jsonData.access) {",
+							"        pm.environment.set(\"accessToken\", jsonData.access);",
+							"        console.log(\"Nouvel accessToken mis à jour !\");",
+							"    }",
+							"    if (jsonData.refresh) {",
+							"        pm.environment.set(\"refreshToken\", jsonData.refresh);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refresh\": \"{{refreshToken}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/accounts/token/refresh/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"token",
+						"refresh",
+						""
+					]
+				},
+				"description": "Génère un nouvel accessToken valide à partir du refreshToken."
+			},
+			"response": []
+		},
+		{
+			"name": "6. Changer Mot de Passe (Change Password)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"old_password\": \"SecuredPassword2026!\",\n    \"new_password\": \"BrandNewPassword2026!\",\n    \"new_password_confirm\": \"BrandNewPassword2026!\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/accounts/change-password/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"change-password",
+						""
+					]
+				},
+				"description": "Modifie le mot de passe de l'utilisateur connecté."
+			},
+			"response": []
+		},
+		{
+			"name": "7. Déconnexion (Logout)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"refresh\": \"{{refreshToken}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/accounts/logout/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"logout",
+						""
+					]
+				},
+				"description": "Révoque et met en liste noire le refreshToken de l'utilisateur."
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://127.0.0.1:8000"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		},
+		{
+			"key": "refreshToken",
+			"value": ""
+		}
+	]
+}
