@@ -1,0 +1,114 @@
+MCA-WEB/
+├── src/
+│   ├── main.tsx
+│   ├── App.tsx
+│   ├── router/
+│   │   ├── AppRouter.tsx
+│   │   └── ProtectedRoute.tsx        # garde selon rôle/entreprise active
+│   │
+│   ├── api/                          # couche HTTP générique
+│   │   ├── axiosClient.ts            # instance + intercepteurs (token, entreprise active)
+│   │   └── endpoints.ts
+│   │
+│   ├── features/
+│   │   ├── auth/                     # Phase 1
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   ├── pages/                # LoginPage, RegisterPage
+│   │   │   ├── hooks/
+│   │   │   └── types.ts
+│   │   │
+│   │   ├── companies/                # sélection entreprise, exercices
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   ├── pages/
+│   │   │   └── types.ts
+│   │   │
+│   │   ├── documents/                # Phase 2 — upload, drag&drop
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   │   ├── DropZone.tsx
+│   │   │   │   └── UploadProgress.tsx
+│   │   │   ├── pages/
+│   │   │   └── types.ts
+│   │   │
+│   │   ├── duplicates/               # Phase 3
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   │   └── DuplicateComparisonView.tsx
+│   │   │   ├── pages/
+│   │   │   └── types.ts
+│   │   │
+│   │   ├── documents-processing/     # Phase 4-5 — OCR & scoring (liste à traiter)
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   ├── pages/
+│   │   │   └── types.ts
+│   │   │
+│   │   ├── accounting-ref/           # Phase 6 — plan comptable, journaux, TVA
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   ├── pages/
+│   │   │   └── types.ts
+│   │   │
+│   │   ├── suppliers/                # Phase 7
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   ├── pages/
+│   │   │   └── types.ts
+│   │   │
+│   │   ├── invoices/                 # Phase 8 — liste, fiche, correction, validation
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   │   ├── InvoiceList.tsx
+│   │   │   │   ├── InvoiceDetail.tsx
+│   │   │   │   ├── InvoiceCorrectionForm.tsx
+│   │   │   │   └── InvoiceHistory.tsx
+│   │   │   ├── pages/
+│   │   │   └── types.ts
+│   │   │
+│   │   ├── journal-entries/          # Phase 9
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   │   └── LedgerView.tsx    # grand livre / balance
+│   │   │   ├── pages/
+│   │   │   └── types.ts
+│   │   │
+│   │   ├── dashboard/                # Phase 11
+│   │   │   ├── api/
+│   │   │   ├── components/
+│   │   │   │   ├── KpiCards.tsx
+│   │   │   │   └── ScoringChart.tsx
+│   │   │   ├── pages/
+│   │   │   └── types.ts
+│   │   │
+│   │   └── exports/                  # Phase 12
+│   │       ├── api/
+│   │       ├── components/
+│   │       ├── pages/
+│   │       └── types.ts
+│   │
+│   ├── components/                   # composants partagés (UI kit)
+│   │   ├── layout/
+│   │   │   ├── Sidebar.tsx
+│   │   │   ├── Topbar.tsx
+│   │   │   └── MainLayout.tsx
+│   │   └── ui/                       # boutons, tables, modals génériques
+│   │
+│   ├── context/
+│   │   ├── AuthContext.tsx
+│   │   └── ActiveCompanyContext.tsx
+│   │
+│   ├── hooks/                        # hooks génériques (useDebounce, usePagination...)
+│   ├── lib/
+│   │   ├── constants.ts
+│   │   └── permissions.ts            # helpers de vérification de rôle
+│   ├── styles/
+│   └── types/
+│       └── global.d.ts
+│
+├── public/
+├── .env.example
+├── vite.config.ts
+├── tsconfig.json
+└── package.json

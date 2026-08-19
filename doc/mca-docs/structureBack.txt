@@ -1,0 +1,126 @@
+MCA-back/
+├── mca_project/                      # config du projet Django
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── wsgi.py
+│   ├── urls.py                       # routage racine -> /api/v1/...
+│   └── settings/
+│       ├── __init__.py
+│       ├── base.py                   # settings communs
+│       ├── dev.py
+│       ├── prod.py
+│       └── test.py
+│
+├── apps/
+│   ├── core/                         # transverse : mixins, permissions, exceptions
+│   │   ├── models.py                 # ex: BaseModel (uuid, created_at, deleted_at)
+│   │   ├── permissions.py            # IsCompanyMember, HasRole, etc.
+│   │   ├── pagination.py
+│   │   ├── exceptions.py
+│   │   └── mixins.py                 # CompanyScopedQuerysetMixin, etc.
+│   │
+│   ├── accounts/                     # Phase 1 — Auth & multi-entreprise
+│   │   ├── models.py                 # User, Role
+│   │   ├── serializers.py
+│   │   ├── views.py                  # register/login/logout, refresh token
+│   │   ├── permissions.py
+│   │   └── urls.py
+│   │
+│   ├── companies/                    # Phase 1 — Companies, UserCompany, FiscalYear
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── services.py               # sélection entreprise active, seed plan comptable
+│   │   └── urls.py
+│   │
+│   ├── documents/                    # Phase 2 — Import, stockage, batches
+│   │   ├── models.py                 # DocumentBatch, Document
+│   │   ├── serializers.py
+│   │   ├── views.py                  # upload multiple
+│   │   ├── services/
+│   │   │   ├── storage.py            # abstraction disque/S3
+│   │   │   └── hashing.py            # SHA-256
+│   │   └── urls.py
+│   │
+│   ├── duplicates/                   # Phase 3 — Détection de doublons
+│   │   ├── models.py                 # DuplicateGroup, DuplicateGroupItem
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── services/
+│   │   │   ├── hash_matching.py
+│   │   │   └── fuzzy_matching.py     # n° facture / montant+date
+│   │   └── urls.py
+│   │
+│   ├── ocr/                          # Phase 4 & 5 — OCR, classification, scoring
+│   │   ├── models.py                 # OcrResult
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── services/
+│   │   │   ├── ocr_engine.py         # intégration moteur OCR (interface + provider)
+│   │   │   ├── field_extraction.py
+│   │   │   ├── classification.py     # facture / avoir / reçu
+│   │   │   └── scoring.py            # processing_score
+│   │   ├── tasks.py                  # Celery : pipeline OCR async
+│   │   └── urls.py
+│   │
+│   ├── accounting_ref/               # Phase 6 — Référentiel comptable
+│   │   ├── models.py                 # ChartOfAccounts, Journal, TaxRate
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── fixtures/                 # plan comptable par défaut (seed)
+│   │   └── urls.py
+│   │
+│   ├── suppliers/                    # Phase 7 — Fournisseurs
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── services.py               # suggestion auto (matching OCR -> fournisseur)
+│   │   └── urls.py
+│   │
+│   ├── invoices/                     # Phase 8 — Saisie & validation
+│   │   ├── models.py                 # Invoice, InvoiceLine
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── services.py               # correction, validation/rejet
+│   │   └── urls.py
+│   │
+│   ├── journal_entries/              # Phase 9 — Écritures comptables
+│   │   ├── models.py                 # JournalEntry, JournalEntryLine
+│   │   ├── serializers.py
+│   │   ├── views.py
+│   │   ├── services/
+│   │   │   ├── entry_generation.py   # mapping facture -> écriture
+│   │   │   ├── numbering.py          # numérotation séquentielle
+│   │   │   ├── balance_check.py      # débit = crédit
+│   │   │   └── reversal.py           # contre-passation
+│   │   └── urls.py
+│   │
+│   ├── workflow/                     # Phase 10 — Statuts & règles de validation
+│   │   ├── services.py               # transitions de statut, permissions par rôle
+│   │   ├── notifications.py
+│   │   └── urls.py
+│   │
+│   ├── dashboard/                    # Phase 11 — KPIs & reporting
+│   │   ├── views.py
+│   │   ├── serializers.py
+│   │   └── urls.py
+│   │
+│   └── exports/                      # Phase 12 — Export FEC, Excel/PDF, clôture
+│       ├── services/
+│       │   ├── fec_export.py
+│       │   └── ledger_export.py      # grand livre / balance
+│       ├── views.py
+│       └── urls.py
+│
+├── config/
+│   └── celery.py                     # si pipeline OCR/async
+│
+├── tests/                            # tests d'intégration transverses
+│   └── ...
+├── requirements/
+│   ├── base.txt
+│   ├── dev.txt
+│   └── prod.txt
+├── manage.py
+├── .env.example
+└── pytest.ini
