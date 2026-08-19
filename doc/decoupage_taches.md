@@ -10,16 +10,16 @@
 
 | #   | Tâche                  | Priorité   | Complexité | Estimation |
 | --- | ----------------------- | ----------- | ----------- | ---------- |
-| T0  | Auth & Base             | 🔴 Critique | ⭐⭐⭐      | 5-7j M     |
-| T1  | Import image en masse   | 🔴 Critique | ⭐⭐⭐      | 5-7j M     |
-| T2  | Détection des doublons | 🟠 Haute    | ⭐⭐        | 3-4j P     |
-| T3  | Implémentation OCR     | 🔴 Critique | ⭐⭐⭐⭐⭐  | 8-12j M    |
-| T4  | Score de traitement     | 🟠 Haute    | ⭐⭐⭐      | 4-5j P     |
-| T5  | Page de saisie          | 🔴 Critique | ⭐⭐⭐⭐    | 7-10j P    |
-| T6  | Écriture comptable     | 🔴 Critique | ⭐⭐⭐⭐    | 6-8j M     |
-| T7  | Gestion fournisseurs    | 🟠 Haute    | ⭐⭐        | 3-4j P     |
-| T8  | Dashboard & Reporting   | 🟡 Moyenne  | ⭐⭐⭐      | 5-6j M     |
-| T9  | Workflow validation     | 🟡 Moyenne  | ⭐⭐⭐      | 4-5j P     |
+| T0  | Auth & Base             | 🔴 Critique | ⭐⭐⭐      | 5-7j       |
+| T1  | Import image en masse   | 🔴 Critique | ⭐⭐⭐      | 5-7j       |
+| T2  | Détection des doublons | 🟠 Haute    | ⭐⭐        | 3-4j       |
+| T3  | Implémentation OCR     | 🔴 Critique | ⭐⭐⭐⭐⭐  | 8-12j      |
+| T4  | Score de traitement     | 🟠 Haute    | ⭐⭐⭐      | 4-5j       |
+| T5  | Page de saisie          | 🔴 Critique | ⭐⭐⭐⭐    | 7-10j      |
+| T6  | Écriture comptable     | 🔴 Critique | ⭐⭐⭐⭐    | 6-8j       |
+| T7  | Gestion fournisseurs    | 🟠 Haute    | ⭐⭐        | 3-4j       |
+| T8  | Dashboard & Reporting   | 🟡 Moyenne  | ⭐⭐⭐      | 5-6j       |
+| T9  | Workflow validation     | 🟡 Moyenne  | ⭐⭐⭐      | 4-5j       |
 | T10 | Export FEC & Archivage  | 🟡 Moyenne  | ⭐⭐        | 3-4j       |
 
 ```mermaid
